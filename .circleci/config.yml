@@ -1,0 +1,113 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2.1
+executors:
+  web_builder_image:
+    docker:
+      - image: circleci/node:14.15.4-browsers
+    working_directory: /tmp/portfolio
+jobs:
+  install:
+    executor: web_builder_image
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - node_modules
+
+  build:
+    executor: web_builder_image
+    steps:
+      # do I need to checkout?
+      - checkout
+      - attach_workspace:
+          at: /tmp/portfolio
+      - run: npm run build
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - build
+  test:
+    executor: web_builder_image
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/portfolio
+      - run: npm run test
+  deploy:
+    executor: web_builder_image
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/portfolio
+      - run: sudo apt-get update && sudo apt-get install python3-pip
+      - run: sudo pip3 install awscli
+      # `deploy` step: identical to a `run` step, but uses only one container:
+      # /docs/2.0/configuration-reference/#deploy
+      - deploy:
+          name: deploy to AWS
+          command: |
+            if [ "${CIRCLE_BRANCH}" = "master" ]; then
+              aws s3 sync ./build \
+              s3://kevinmccartney.is --delete
+            else
+              aws s3 sync ./build \
+              s3://dev.kevinmccartney.is --delete
+            fi
+workflows:
+  ci_cd_harness:
+    jobs:
+      - install
+      - build:
+          name: build_dev
+          filters:
+            branches:
+              ignore:
+                - master
+          requires:
+            - install
+      - build:
+          name: build_prod
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - deploy:
+          context: aws-credentials
+          name: deploy_prod
+          requires:
+            - build_prod
+            - test
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          context: aws-credentials
+          name: deploy_dev
+          requires:
+            - build_dev
+            - test
+          filters:
+            branches:
+              only:
+                - develop
