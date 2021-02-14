@@ -82,4 +82,5 @@ module.exports = {
     spacing: spacingMap,
   },
   important: true,
+  darkMode: 'class',
 };
