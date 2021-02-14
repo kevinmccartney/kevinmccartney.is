@@ -3,6 +3,15 @@ import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App', () => {
+  beforeEach(() => {
+    jest.spyOn(document, 'querySelector').mockImplementation(
+      () =>
+        (({
+          href: '',
+        } as unknown) as Element),
+    );
+  });
+
   test('renders the name title', () => {
     render(<App />);
     const nameTitleElement = screen.getByText(/Hello, I am Kevin McCartney/i);
