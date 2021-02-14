@@ -72,11 +72,10 @@ module.exports = {
       ...breakpoints(theme('screens')),
       ...spacingMap,
     }),
-    // https://material.io/design/layout/responsive-layout-grid.html#breakpoints
     screens: {
       xs: '0px',
-      sm: '600px',
-      md: '1024px',
+      sm: '720px',
+      md: '1152px',
       lg: '1440px',
       xl: '1920px',
     },
