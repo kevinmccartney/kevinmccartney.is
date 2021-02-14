@@ -5,24 +5,49 @@ import Toggle from 'react-toggle';
 const LightIcon = () => <i className="fas fa-sun text-white"></i>;
 const DarkIcon = () => <i className="fas fa-moon"></i>;
 
-export const useDarkMode: () => [string, () => void] = () => {
+const updateFavicon = (mode: string) => {
+  const link = window.document.querySelector(
+    "link[rel~='icon']",
+  ) as HTMLLinkElement;
+
+  if (mode === 'dark') {
+    link.href = '/favicon_dark.ico';
+  } else if (mode === 'light') {
+    link.href = '/favicon_light.ico';
+  }
+};
+
+export const useDarkMode: () => [string, (mode: string) => void] = () => {
   const [theme, setTheme] = useState('dark');
-  const toggleTheme = () => {
-    if (theme === 'light') {
+  const toggleTheme = (mode: string) => {
+    if (mode === 'light') {
+      window.localStorage.setItem('theme', 'light');
+      window.document.body.style.backgroundColor = 'white';
+      setTheme('light');
+    } else {
       window.localStorage.setItem('theme', 'dark');
       setTheme('dark');
-    } else {
-      window.localStorage.setItem('theme', 'light');
-      setTheme('light');
+      window.document.body.style.backgroundColor = 'black';
     }
   };
 
   useEffect(() => {
     const localTheme = window.localStorage.getItem('theme');
     localTheme && setTheme(localTheme);
+
+    if (localTheme === 'light') {
+      updateFavicon('light');
+      document.body.style.backgroundColor = 'white';
+    }
   }, []);
 
   return [theme, toggleTheme];
+};
+
+export const useFaviconSwitcher: (mode: string) => void = (mode: string) => {
+  useEffect(() => {
+    updateFavicon(mode);
+  });
 };
 
 function App() {
@@ -34,7 +59,12 @@ function App() {
   const howIWasMadeLink = 'https://github.com/kevinmccartney/kevinmccartney.is';
   const name = 'Kevin McCartney';
   const roles = ['engineer', 'mentor', 'teacher'];
-  const [theme, toggleTheme]: [string, () => void] = useDarkMode();
+  const [theme, toggleTheme]: [
+    string,
+    (newTheme: string) => void,
+  ] = useDarkMode();
+
+  useFaviconSwitcher(theme);
 
   const renderRoles = (rolesToRender: string[]) =>
     rolesToRender.reduce((prev: string, current: string, index: number) => {
@@ -51,15 +81,13 @@ function App() {
       return `${prev}${role}`;
     }, '');
 
-  const handleChange = () => {
-    toggleTheme();
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    toggleTheme(event.target.checked ? 'dark' : 'light');
   };
 
   return (
     <main
       className={classNames({
-        App: true,
-
         'h-screen': true,
         'w-screen': true,
         'font-mono': true,
@@ -75,7 +103,7 @@ function App() {
           'flex-column': true,
         })}
       >
-        <div className="p-16 flex justify-end">
+        <div className="p-24 sm:px-48 flex justify-end">
           <Toggle
             defaultChecked={true}
             aria-label="No label tag"
@@ -87,9 +115,9 @@ function App() {
             checked={theme === 'dark'}
           />
         </div>
-        <div className="dark:text-white flex-grow-1 flex flex-col justify-center items-center text-center">
-          <h1 className="text-8xl pb-24">Hello, I am {name}</h1>
-          <h2 className="text-6xl pb-32">{renderRoles(roles)}</h2>
+        <div className="dark:text-white flex-grow-1 flex flex-col justify-center items-center text-center px-24 sm:px-48">
+          <h1 className="text-7xl pb-24">Hello, I am {name}</h1>
+          <h2 className="text-5xl pb-32">{renderRoles(roles)}</h2>
           <div className="flex dark:text-green-300 text-blue-500 text-6xl underline">
             <a
               href={socialLinks.linkedIn}
@@ -118,7 +146,7 @@ function App() {
             </a>
           </div>
         </div>
-        <div className="text-white p-16 flex justify-center dark:text-green-300 text-blue-500 text-2xl underline font-extrabold">
+        <div className="text-white p-24 sm:px-48 flex justify-center dark:text-green-300 text-blue-500 text-2xl underline font-extrabold">
           <a
             target="_blank"
             href={howIWasMadeLink}
