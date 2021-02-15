@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { Homepage } from './Homepage';
 
-describe('App', () => {
+describe('Homepage', () => {
   beforeEach(() => {
     jest.spyOn(document, 'querySelector').mockImplementation(
       () =>
@@ -13,19 +13,19 @@ describe('App', () => {
   });
 
   test('renders the name title', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByText(/Hello, I am Kevin McCartney/i);
     expect(nameTitleElement).toBeInTheDocument();
   });
 
   test('renders the role title', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByText(/Engineer, mentor, & teacher/i);
     expect(nameTitleElement).toBeInTheDocument();
   });
 
   test('renders linkedin link', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByTestId(
       'linkedin-link',
     ) as HTMLLinkElement;
@@ -35,7 +35,7 @@ describe('App', () => {
   });
 
   test('renders twitter link', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByTestId(
       'twitter-link',
     ) as HTMLLinkElement;
@@ -43,7 +43,7 @@ describe('App', () => {
   });
 
   test('renders github link', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByTestId(
       'github-link',
     ) as HTMLLinkElement;
@@ -51,7 +51,7 @@ describe('App', () => {
   });
 
   test('renders how i was made link', () => {
-    render(<App />);
+    render(<Homepage />);
     const nameTitleElement = screen.getByTestId(
       'how-i-was-made-link',
     ) as HTMLLinkElement;
