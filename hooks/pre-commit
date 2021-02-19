@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-npm run prettier
+npm run prettier:fix
 
 terraform fmt -recursive terraform

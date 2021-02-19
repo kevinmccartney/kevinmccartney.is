@@ -68,7 +68,7 @@ resource "aws_s3_bucket" "web_dist_www" {
     "environment" = var.environment
   }
 
-  
+
 }
 
 resource "aws_route53_record" "s3_dist_record_dev" {
@@ -77,10 +77,10 @@ resource "aws_route53_record" "s3_dist_record_dev" {
   zone_id = data.aws_route53_zone.route_zone.zone_id
   name    = local.bucket_name
   type    = "A"
-  
+
   alias {
-    name = aws_cloudfront_distribution.s3_dist_dev[0].domain_name
-    zone_id = aws_cloudfront_distribution.s3_dist_dev[0].hosted_zone_id
+    name                   = aws_cloudfront_distribution.s3_dist_dev[0].domain_name
+    zone_id                = aws_cloudfront_distribution.s3_dist_dev[0].hosted_zone_id
     evaluate_target_health = false
   }
 }
@@ -91,10 +91,10 @@ resource "aws_route53_record" "s3_dist_record_prod" {
   zone_id = data.aws_route53_zone.route_zone.zone_id
   name    = local.bucket_name
   type    = "A"
-  
+
   alias {
-    name = aws_cloudfront_distribution.s3_dist_prod[0].domain_name
-    zone_id = aws_cloudfront_distribution.s3_dist_prod[0].hosted_zone_id
+    name                   = aws_cloudfront_distribution.s3_dist_prod[0].domain_name
+    zone_id                = aws_cloudfront_distribution.s3_dist_prod[0].hosted_zone_id
     evaluate_target_health = false
   }
 }
@@ -107,8 +107,8 @@ resource "aws_route53_record" "www_redirect_record" {
   type    = "A"
 
   alias {
-    name = aws_cloudfront_distribution.s3_dist_prod_www[0].domain_name
-    zone_id = aws_cloudfront_distribution.s3_dist_prod_www[0].hosted_zone_id
+    name                   = aws_cloudfront_distribution.s3_dist_prod_www[0].domain_name
+    zone_id                = aws_cloudfront_distribution.s3_dist_prod_www[0].hosted_zone_id
     evaluate_target_health = false
   }
 }
