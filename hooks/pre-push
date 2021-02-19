@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+./node_modules/.bin/eslint && npm run test -- --watchAll=false
+
+terraform validate terraform

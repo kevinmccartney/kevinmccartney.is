@@ -18,7 +18,7 @@ data "terraform_remote_state" "state" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket         = "portfolio-state"
+  bucket = "portfolio-state"
 
   tags = {
     "project"     = "portfolio"
