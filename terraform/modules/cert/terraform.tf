@@ -1,8 +1,8 @@
 resource "aws_route53_zone" "domain_routes" {
   name = "kevinmccartney.is"
   tags = {
-    "project"    = "portfolio"
-    "managed_by" = "terraform"
+    "project"     = "portfolio"
+    "managed_by"  = "terraform"
     "environment" = "global"
   }
 }
@@ -12,8 +12,8 @@ resource "aws_acm_certificate" "default" {
   subject_alternative_names = ["*.kevinmccartney.is"]
   validation_method         = "DNS"
   tags = {
-    "project"    = "portfolio"
-    "managed_by" = "terraform"
+    "project"     = "portfolio"
+    "managed_by"  = "terraform"
     "environment" = "global"
   }
   options {
