@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+./node_modules/.bin/eslint && npm run test -- --watchAll=false
+
+echo ""
+echo "Validating global Terraform..."
+cd terraform && terraform validate
+echo "Validating dev Terraform..."
+cd dev && terraform validate
+echo "Validating prod Terraform..."
+cd ../prod && terraform validate
