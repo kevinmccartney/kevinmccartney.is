@@ -4,3 +4,4 @@ export * from './header';
 export * from './hero';
 export * from './about-me';
 export * from './experience';
+export * from './tools-trade';

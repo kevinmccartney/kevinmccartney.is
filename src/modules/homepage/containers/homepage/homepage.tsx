@@ -7,6 +7,7 @@ import {
   Footer,
   Header,
   Hero,
+  ToolsTrade,
 } from 'modules/homepage/components';
 
 import './homepage.css';
@@ -42,10 +43,11 @@ const HomepageComponent = ({
         id="app"
       >
         <Header theme={theme} toggleTheme={toggleTheme} />
-        <main className="dark:text-white flex-grow-1 px-24 sm:px-48">
+        <main className="dark:text-white text-gray-700 flex-grow-1 px-24 sm:px-48">
           <Hero />
           <AboutMe />
           <Experience />
+          <ToolsTrade />
         </main>
         <Footer />
       </div>
