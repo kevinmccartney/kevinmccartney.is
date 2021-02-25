@@ -1,5 +1,5 @@
 export const AboutMe = () => (
-  <div className="h-full pt-24 max-w-720 m-auto mt-64">
+  <div className="max-w-720 m-auto mt-32 sm:mt-64">
     <h3 className="text-5xl dark:text-green-300 text-blue-500">About Me</h3>
     <p className="text-2xl mt-24 leading-relaxed">
       Kevin McCartney discovered his love for software engineering by accident

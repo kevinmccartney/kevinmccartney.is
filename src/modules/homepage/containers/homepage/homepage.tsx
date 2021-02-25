@@ -1,7 +1,13 @@
 import classNames from 'classnames';
 import React, { Dispatch } from 'react';
 
-import { AboutMe, Footer, Header, Hero } from 'modules/homepage/components';
+import {
+  AboutMe,
+  Experience,
+  Footer,
+  Header,
+  Hero,
+} from 'modules/homepage/components';
 
 import './homepage.css';
 import { connect } from 'react-redux';
@@ -39,6 +45,7 @@ const HomepageComponent = ({
         <main className="dark:text-white flex-grow-1 px-24 sm:px-48">
           <Hero />
           <AboutMe />
+          <Experience />
         </main>
         <Footer />
       </div>

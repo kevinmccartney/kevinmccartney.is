@@ -20,7 +20,7 @@ export const Hero = () => {
     }, '');
 
   return (
-    <div className="mt-104 flex flex-col justify-center items-center text-center">
+    <div className="mt-64 sm:mt-104 flex flex-col justify-center items-center text-center">
       <h1 className="text-7xl pb-24">Hello, I am {name}</h1>
       <h2 className="text-5xl pb-32">{renderRoles(roles)}</h2>
     </div>
