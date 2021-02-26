@@ -1,9 +1,41 @@
+import { useState } from 'react';
+
 export const SayHello = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log(event);
+    console.log({
+      name: nameFieldState,
+      email: emailFieldState,
+      message: messageFieldState,
+    });
   };
+  const [nameFieldState, updateNameFieldState] = useState('');
+  const [emailFieldState, updateEmailFieldState] = useState('');
+  const [messageFieldState, updateMessageFieldState] = useState('');
+
+  const updateFormField = (
+    field: 'name' | 'email' | 'message',
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    switch (field) {
+      case 'name':
+        updateNameFieldState(() => e.target.value);
+
+        break;
+      case 'email':
+        updateEmailFieldState(() => e.target.value);
+
+        break;
+      case 'message':
+        updateMessageFieldState(() => e.target.value);
+
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="max-w-720 m-auto mt-32 sm:mt-64">
       <h3 className="text-5xl dark:text-green-300 text-blue-500">Say Hello</h3>
@@ -15,6 +47,8 @@ export const SayHello = () => {
               className="dark:border-yellow-300 border-pink-600 border-2 rounded-md p-8 bg-transparent w-336 mt-12"
               type="text"
               placeholder="Your Name"
+              value={nameFieldState}
+              onChange={(e) => updateFormField('name', e)}
             ></input>
           </label>
           <label className="ml-32">
@@ -23,6 +57,8 @@ export const SayHello = () => {
               className="dark:border-yellow-300 border-pink-600 border-2 rounded-md p-8 bg-transparent w-336 mt-12"
               type="text"
               placeholder="Your email"
+              value={emailFieldState}
+              onChange={(e) => updateFormField('email', e)}
             ></input>
           </label>
         </div>
@@ -31,6 +67,8 @@ export const SayHello = () => {
           <textarea
             className="dark:border-yellow-300 border-pink-600 border-2 rounded-md p-8 bg-transparent w-full mt-12 min-h-128"
             placeholder="Message"
+            value={messageFieldState}
+            onChange={(e) => updateFormField('message', e)}
           ></textarea>
         </label>
         <input
