@@ -7,6 +7,7 @@ import {
   Footer,
   Header,
   Hero,
+  SayHello,
   ToolsTrade,
 } from 'modules/homepage/components';
 
@@ -48,6 +49,7 @@ const HomepageComponent = ({
           <AboutMe />
           <Experience />
           <ToolsTrade />
+          <SayHello />
         </main>
         <Footer />
       </div>

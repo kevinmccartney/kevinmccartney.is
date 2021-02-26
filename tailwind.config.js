@@ -43,6 +43,9 @@ module.exports = {
       maxHeight: {
         ...spacingMap,
       },
+      minHeight: {
+        ...spacingMap,
+      },
       minWidth: {
         ...spacingMap,
       },
